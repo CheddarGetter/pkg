@@ -14,7 +14,7 @@ local function updateController()
         -- install the controller
         writefile("pkg/controller.lua", response.Body)
     else
-        -- woops something went wrong with the request, this darned internet i tell ya!
+        -- woops something went wrong with the request
         error(response.StatusCode .. ": " .. response.StatusMessage) -- tell me what went wrong... NOW!
     end
 end
@@ -28,7 +28,10 @@ end
 local chunk, catch = loadfile "pkg/controller.lua"
 if catch then
     error(catch) -- tell me why!!!!!!!
+    return
 end
+
+task.spawn(chunk)
 
 -- the user won't run the latest controller until this script is executed again
 -- personally i think this is better than yielding to get the latest version though
