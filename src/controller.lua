@@ -1,4 +1,6 @@
-if not syn or pkg then return end
+if not syn then return end
+
+if not isfolder "pkg_modules" then makefolder "pkg_modules" end
 
 if not isfile "pkg_controller.lua" then
     local response = syn.request {Url = "https://raw.githubusercontent.com/CheddarGetter/pkg/main/src/controller.lua"}
@@ -11,7 +13,7 @@ if not isfile "pkg_controller.lua" then
     end
 end
 
-if not isfolder "pkg_modules" then makefolder "pkg_modules" end
+if pkg then return end
 
 local b64Decode = syn_crypt_b64_decode
 local b64Encode = syn_crypt_b64_encode
