@@ -1,3 +1,19 @@
+if not syn or pkg then return end
+
+if not isfile "pkg_controller.lua" then
+    local response = syn.request {Url = "https://raw.githubusercontent.com/CheddarGetter/pkg/main/src/controller.lua"}
+
+    if response.Success == true then
+        writefile("pkg_controller.lua", response.Body)
+    else
+        warn(tostring(response.StatusCode) .. ": " .. tostring(response.StatusMessage))
+        return
+    end
+end
+
+if not isfolder "pkg" then makefolder "pkg" end
+if not isfolder "pkg/modules" then makefolder "pkg/modules" end
+
 local b64Decode = syn_crypt_b64_decode
 local b64Encode = syn_crypt_b64_encode
 
@@ -8,6 +24,8 @@ local importQueue = {}
 local moduleLoaded = Instance.new("BindableEvent")
 
 local globalEnv = getgenv()
+
+globalEnv.pkg = true
 
 local function httpGet(url, callback)
     local response = syn.request {Url = url}
@@ -48,7 +66,7 @@ function globalEnv.import(url)
         return
     end
 
-    local module = assert(chunk(), "Module does not return anything ")
+    local module = assert(chunk(), "Module does not return anything")
 
     importQueue[url] = nil
     modules[url] = module
