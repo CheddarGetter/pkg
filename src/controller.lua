@@ -11,8 +11,7 @@ if not isfile "pkg_controller.lua" then
     end
 end
 
-if not isfolder "pkg" then makefolder "pkg" end
-if not isfolder "pkg/modules" then makefolder "pkg/modules" end
+if not isfolder "pkg_modules" then makefolder "pkg_modules" end
 
 local b64Decode = syn_crypt_b64_decode
 local b64Encode = syn_crypt_b64_encode
@@ -52,7 +51,7 @@ function globalEnv.import(url)
     importQueue[url] = true
 
     local b64Url = b64Encode(url)
-    local path = ("pkg/modules/%s.lua"):format(b64Url)
+    local path = ("pkg_modules/%s.lua"):format(b64Url)
 
     if not isfile(path) then
         httpGet(url, function(response)
@@ -83,11 +82,11 @@ end
 
 -- handle updating
 httpGet("https://raw.githubusercontent.com/CheddarGetter/pkg/main/src/controller.lua", function(response)
-    if readfile "pkg/controller.lua" == response.Body then return end
+    if readfile "pkg_controller.lua" == response.Body then return end
 
     local choice = messagebox("would you like to update the pkg controller?", "pkg", 4)
 
     if choice == 6 then
-        writefile("pkg/controller.lua", response.Body)
+        writefile("pkg_controller.lua", response.Body)
     end
 end)
