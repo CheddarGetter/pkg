@@ -40,7 +40,7 @@ end
 ```
 
 ___
-##import
+## import
 **NOTE:** THIS FUNCTION CAN BE USED TO INSTALL **MALICIOUS** MODULES! consider using getModule instead.
 
 this function allows you to import any lua module from a raw content url.
