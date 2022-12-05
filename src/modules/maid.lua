@@ -1,10 +1,10 @@
+-- made for pkg
 -- maid.lua
--- by red
--- 10 / 12 / 2022
+-- 12 / 4 / 2022
 
 local objectCleanLogic = {
 	["thread"] = function(object)
-		task.cancel(object)
+		pcall(task.cancel, object) -- could be a footgun?
 	end;
 
 	["RBXScriptConnection"] = function(object)
@@ -16,13 +16,14 @@ local objectCleanLogic = {
 	end;
 }
 
-local module = {}; module.__index = module
+local module = {}
+module.__index = module
 
 function module.new()
 	return setmetatable({}, module)
 end
 
-function module:clean()
+function module:Clean()
 	for _, object in ipairs(self) do
 		objectCleanLogic[typeof(object)](object)
 	end
@@ -30,7 +31,7 @@ function module:clean()
 	table.clear(self)
 end
 
-function module:add(object)
+function module:Add(object)
 	if objectCleanLogic[typeof(object)] then
 		self[#self + 1] = object
 		return object

@@ -1,3 +1,7 @@
+-- made for pkg
+-- new.lua
+-- 12/4/2022
+
 local newInstance = Instance.new
 
 return function (instance)

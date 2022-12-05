@@ -1,3 +1,7 @@
+-- made for pkg
+-- net.lua
+-- 12/4/2022
+
 local heartbeat = game:GetService("RunService").Heartbeat
 local random = Random.new()
 
